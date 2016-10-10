@@ -57,6 +57,26 @@ function init() {
         ctx.drawImage(wolfImgBottomLeft, wolfBottomLeft.x, wolfBottomLeft.y, wolfBottomLeft.w, wolfBottomLeft.h);
         //c.fillRect(x, y, width, height);
     }
+    
+    function fallingEggs() {
+        let positionToFallFrom = parseInt(Math.random() * (4)) + 1;
+        if (positionToFallFrom === 1) {
+            generatingPosition(positionToFallFrom)
+        } else if (positionToFallFrom === 2) {
+            generatingPosition(positionToFallFrom)
+        } else if (positionToFallFrom === 3) {
+            generatingPosition(positionToFallFrom)
+        } else {
+            generatingPosition(positionToFallFrom)
+        }
+
+        function generatingPosition(position) {
+            switch (position) {
+                case 1:
+
+            }
+        }
+    }
 }
 
 init();
