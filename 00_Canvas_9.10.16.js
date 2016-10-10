@@ -8,11 +8,10 @@ function init() {
     let wolfImgTopLeft = document.getElementById('wolfTopLeft');
     let wolfImgBottomLeft = document.getElementById('wolfBottomLeft');
     //let chickenImgLeft = document.getElementById('chickenLeft');
-    let wolfTopRight = {x: 150, y:70, w: 100, h: 78};
-    let wolfBottomRight = {x: 150, y:70, w: 100, h: 78};
-    let wolfTopLeft = {x: 50, y: 70, w: 100, h: 78};
-    let wolfBottomLeft = {x: 50, y: 70, w: 100, h: 78};
-    let moveSpeed = 10;
+    let wolfTopRight = {x: 155, y:50, w: 50, h: 60};
+    let wolfBottomRight = {x: 155, y:50, w: 50, h: 60};
+    let wolfTopLeft = {x: 95, y: 50, w: 50, h: 60};
+    let wolfBottomLeft = {x: 95, y: 50, w: 50, h: 60};
    // debugger;
 
     window.addEventListener('keydown', kbdHangler);
