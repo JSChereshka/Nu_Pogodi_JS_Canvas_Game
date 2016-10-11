@@ -88,23 +88,29 @@ function init() {
         if(eggToFall === eggBottomLeft || eggToFall === eggTopLeft) {
             if(eggToFall.x >= wolfCoordinateX ){
                 if (eggToFall === eggBottomLeft) {
+                    clear(eggToFall, -moveRateX, -moveRateY);
                     eggToFall.x = 73;
                     eggToFall.y = 65;
+
                 } else {
+                    clear(eggToFall, -moveRateX, -moveRateY);
                     eggToFall.x = 73;
                     eggToFall.y = 36;
                 }
                 fallingEggs();
             } else {
                 ctx.drawImage(egg, eggToFall.x, eggToFall.y, eggToFall.w, eggToFall.h);
+
             }
             clear(eggToFall, -moveRateX, -moveRateY);
         } else if (eggToFall === eggTopRight || eggToFall === eggBottomRight) {
             if(eggToFall.x < wolfCoordinateX + 50 ){
                 if (eggToFall === eggTopRight) {
+                    clear(eggToFall, -moveRateX, -moveRateY);
                     eggToFall.x = 225;
                     eggToFall.y = 36;
                 } else {
+                    clear(eggToFall, -moveRateX, -moveRateY);
                     eggToFall.x = 225;
                     eggToFall.y =65;
                 }
