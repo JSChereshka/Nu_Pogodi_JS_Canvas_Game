@@ -45,25 +45,25 @@ function init() {
 
 
     function drawTopRight() {
-        ctx.clearRect(100, 50, 110, 60);
+        ctx.clearRect(98, 50, 102, 60);
         ctx.drawImage(wolfImgTopRight, wolfTopRight.x, wolfTopRight.y, wolfTopRight.w, wolfTopRight.h);
 
     }
 
     function drawBottomRight() {
-        ctx.clearRect(100, 50, 110, 60);
+        ctx.clearRect(98, 50, 102, 60);
         ctx.drawImage(wolfImgBottomRight, wolfBottomRight.x, wolfBottomRight.y, wolfBottomRight.w, wolfBottomRight.h);
     }
 
     function drawTopLeft(){
-        ctx.clearRect(100, 50, 120, 60);
+        ctx.clearRect(98, 50, 102, 60);
 
         ctx.drawImage(wolfImgTopLeft, wolfTopLeft.x, wolfTopLeft.y, wolfTopLeft.w, wolfTopLeft.h);
         //c.fillRect(x, y, width, height);
     }
 
     function drawBottomLeft(){
-        ctx.clearRect(100, 50, 120, 60);
+        ctx.clearRect(98, 50, 102, 60);
         ctx.drawImage(wolfImgBottomLeft, wolfBottomLeft.x, wolfBottomLeft.y, wolfBottomLeft.w, wolfBottomLeft.h);
         //c.fillRect(x, y, width, height);
     }
