@@ -1,10 +1,10 @@
 /**
  * Created by Ivan Minchev on 9.10.2016 г..
  */
-let wolfTopRight = {x: 155, y:50, w: 50, h: 60};
-let wolfBottomRight = {x: 155, y:50, w: 50, h: 60};
-let wolfTopLeft = {x: 95, y: 50, w: 50, h: 60};
-let wolfBottomLeft = {x: 95, y: 50, w: 50, h: 60};
+let wolfTopRight = {x: 150, y:50, w: 50, h: 60};
+let wolfBottomRight = {x: 150, y:50, w: 50, h: 60};
+let wolfTopLeft = {x: 100, y: 50, w: 50, h: 60};
+let wolfBottomLeft = {x: 100, y: 50, w: 50, h: 60};
 let eggTopLeft = {x: 73, y: 36, w: 5, h:7};
 let eggTopRight = {x: 225, y: 36, w: 5, h:7};
 let eggBottomRight = {x: 225, y: 65, w: 5, h:7};
@@ -31,7 +31,7 @@ function init() {
         //console.log(event.code);
         switch(event.code){
             case 'Numpad7': drawTopLeft();
-                    break;
+                break;
             case 'Numpad9': drawTopRight();
                 break;
             case 'Numpad1': drawBottomLeft();
@@ -45,25 +45,25 @@ function init() {
 
 
     function drawTopRight() {
-        ctx.clearRect(0, 0, 745, 470);
+        ctx.clearRect(100, 50, 110, 60);
         ctx.drawImage(wolfImgTopRight, wolfTopRight.x, wolfTopRight.y, wolfTopRight.w, wolfTopRight.h);
 
     }
 
     function drawBottomRight() {
-        ctx.clearRect(0, 0, 745, 470);
+        ctx.clearRect(100, 50, 110, 60);
         ctx.drawImage(wolfImgBottomRight, wolfBottomRight.x, wolfBottomRight.y, wolfBottomRight.w, wolfBottomRight.h);
     }
 
     function drawTopLeft(){
-        ctx.clearRect(0, 0, 745, 470);
+        ctx.clearRect(100, 50, 120, 60);
 
         ctx.drawImage(wolfImgTopLeft, wolfTopLeft.x, wolfTopLeft.y, wolfTopLeft.w, wolfTopLeft.h);
         //c.fillRect(x, y, width, height);
     }
 
     function drawBottomLeft(){
-        ctx.clearRect(0, 0, 745, 470);
+        ctx.clearRect(100, 50, 120, 60);
         ctx.drawImage(wolfImgBottomLeft, wolfBottomLeft.x, wolfBottomLeft.y, wolfBottomLeft.w, wolfBottomLeft.h);
         //c.fillRect(x, y, width, height);
     }
