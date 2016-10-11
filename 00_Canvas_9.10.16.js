@@ -69,6 +69,7 @@ function init() {
     }
 
     function fallingEggs(position) {
+        position = parseInt(Math.random() * (4)) + 1;
         if (position === 1) {
             animate(eggTopLeft, 5, 3, wolfTopLeft.x);
         } else if (position === 2) {
@@ -81,20 +82,35 @@ function init() {
 
     }
     function animate(eggToFall, moveRateX, moveRateY, wolfCoordinateX) {
+        let originalEgg = eggToFall;
         eggToFall.x += moveRateX;
         eggToFall.y += moveRateY;
         if(eggToFall === eggBottomLeft || eggToFall === eggTopLeft) {
             if(eggToFall.x >= wolfCoordinateX ){
-                fallingEggs(generateRandomPosition());
+                if (eggToFall === eggBottomLeft) {
+                    eggToFall.x = 73;
+                    eggToFall.y = 65;
+                } else {
+                    eggToFall.x = 73;
+                    eggToFall.y = 36;
+                }
+                fallingEggs();
             } else {
                 ctx.drawImage(egg, eggToFall.x, eggToFall.y, eggToFall.w, eggToFall.h);
             }
             clear(eggToFall, -moveRateX, -moveRateY);
         } else if (eggToFall === eggTopRight || eggToFall === eggBottomRight) {
             if(eggToFall.x < wolfCoordinateX + 50 ){
-                fallingEggs(generateRandomPosition());
+                if (eggToFall === eggTopRight) {
+                    eggToFall.x = 225;
+                    eggToFall.y = 36;
+                } else {
+                    eggToFall.x = 225;
+                    eggToFall.y =65;
+                }
+                fallingEggs();
             } else {
-                ctx.drawImage(egg, eggToFall.x, eggToFall.y, eggToFall.w, eggToFall.h);
+                ctx.drawImage(egg, eggToFall.x, eggToFall.y, eggToFall.w, eggToFall.h);;
             }
             clear(eggToFall, -moveRateX, -moveRateY);
         }
@@ -103,8 +119,10 @@ function init() {
     function clear(eggToFall, offsetX, offsetY) {
         ctx.clearRect(eggToFall.x + offsetX, eggToFall.y + offsetY, eggToFall.w, eggToFall.h+1);
     }
-    function generateRandomPosition() {
-        return parseInt(Math.random() * (4)) + 1;
+
+    function resetEgg(eggToReset, originalEgg) {
+        eggToReset.x = originalEgg.x;
+        eggToReset.y = originalEgg.y;
     }
 }
 
