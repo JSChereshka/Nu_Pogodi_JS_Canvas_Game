@@ -1,38 +1,38 @@
 let buttonPushTopLeft = {x: 6, y: 74, w: 40, h: 40};
 let buttonPushTopRight = {x: 255, y: 74, w:40, h: 40};
-let buttonPushBotLeft = {x: 6, y: 115, w: 40, h: 40};
-let buttonPushBotRight = {x: 255, y: 115, w:40, h: 40};
+let buttonPushBotLeft = {x: 6, y: 113, w: 40, h: 40};
+let buttonPushBotRight = {x: 255, y: 113, w:40, h: 40};
 let wolfTopRight = {x: 150, y:50, w: 50, h: 60, pos: 'topRight'};
 let wolfBottomRight = {x: 150, y:50, w: 50, h: 60, pos: 'bottomRight'};
 let wolfTopLeft = {x: 100, y: 50, w: 50, h: 60, pos: 'topLeft'};
 let wolfBottomLeft = {x: 100, y: 50, w: 50, h: 60, pos:'bottomLeft'};
-let eggTopLeft = {x: 73, y: 36, w: 5, h:7, pos: 'topLeft'};
-let eggTopRight = {x: 227, y: 34, w: 5, h:7, pos: 'topRight'};
+let eggTopLeft = {x: 73, y: 38, w: 5, h:7, pos: 'topLeft'};
+let eggTopRight = {x: 227, y: 36, w: 5, h:7, pos: 'topRight'};
 let eggBottomRight = {x: 227, y: 64, w: 5, h:7, pos: 'bottomRight'};
-let eggBottomLeft = {x: 73, y: 65, w: 5, h:7, pos: 'bottomLeft'};
+let eggBottomLeft = {x: 73, y: 66, w: 5, h:7, pos: 'bottomLeft'};
+let gameOver = {x:59, y:2, w:183,  h:115};
 
 function init() {
     let ctx = document.getElementById("canvas").getContext("2d");
     let buttonImg = document.getElementById('button');
-    //buttonImg.Scale(2, 2);
     let wolfImgTopRight = document.getElementById('wolfTopRight');
     let wolfImgBottomRight = document.getElementById('wolfBottomRight');
     let wolfImgTopLeft = document.getElementById('wolfTopLeft');
     let wolfImgBottomLeft = document.getElementById('wolfBottomLeft');
     let egg = document.getElementById('theEgg');
     let crackedEgg = document.getElementById('crackedEgg');
-    //let chickenImgLeft = document.getElementById('chickenLeft');
-
+    let gameOverImg = document.getElementById('gameOver');
 
     let score = 0;
     let lives = 3;
     let wolfCurrentPos = '';
+
     // debugger;
 
     window.addEventListener('keydown', kbdHandler);
     window.addEventListener('keyup', kbuHandler);
 
-    setInterval(fallingEggs, 400);
+    let startEggs = setInterval(fallingEggs, 400);
     function kbdHandler(event){
         //console.log(event.code);
         switch(event.code){
@@ -86,7 +86,6 @@ function init() {
         ctx.drawImage(wolfImgTopLeft, wolfTopLeft.x, wolfTopLeft.y, wolfTopLeft.w, wolfTopLeft.h);
         ctx.drawImage(buttonImg, buttonPushTopLeft.x, buttonPushTopLeft.y, buttonPushTopLeft.w, buttonPushTopLeft.h);
         wolfCurrentPos = wolfTopLeft.pos;
-        //c.fillRect(x, y, width, height);
     }
 
     function drawBottomLeft(){
@@ -94,10 +93,12 @@ function init() {
         ctx.drawImage(wolfImgBottomLeft, wolfBottomLeft.x, wolfBottomLeft.y, wolfBottomLeft.w, wolfBottomLeft.h);
         ctx.drawImage(buttonImg, buttonPushBotLeft.x, buttonPushBotLeft.y, buttonPushBotLeft.w, buttonPushBotLeft.h);
         wolfCurrentPos = wolfBottomLeft.pos;
-        //c.fillRect(x, y, width, height);
     }
 
     function fallingEggs(position) {
+        if(score < -1){
+            gameOver();
+        }
         position = parseInt(Math.random() * (4)) + 1;
         if (position === 1) {
             animate(eggTopLeft, 5, 3, wolfTopLeft, wolfCurrentPos);
@@ -125,11 +126,11 @@ function init() {
                 if (eggToFall === eggBottomLeft) {
                     clear(eggToFall, -moveRateX, -moveRateY);
                     eggToFall.x = 73;
-                    eggToFall.y = 65;
+                    eggToFall.y = 66;
                 } else {
                     clear(eggToFall, -moveRateX, -moveRateY);
                     eggToFall.x = 73;
-                    eggToFall.y = 36;
+                    eggToFall.y = 38;
                 }
                 fallingEggs();
             } else {
@@ -148,11 +149,11 @@ function init() {
                 if (eggToFall === eggTopRight) {
                     clear(eggToFall, -moveRateX, -moveRateY);
                     eggToFall.x = 227;
-                    eggToFall.y = 34;
+                    eggToFall.y = 36;
                 } else {
                     clear(eggToFall, -moveRateX, -moveRateY);
                     eggToFall.x = 227;
-                    eggToFall.y = 63;
+                    eggToFall.y = 64;
                 }
                 fallingEggs();
             } else {
@@ -185,24 +186,42 @@ function init() {
         } else if (eggToCheck.pos === wolfCurrentPos) {
             score ++
         } else {
-            lives --;
+            score --;
             if(eggToCheck.pos === 'topLeft'){
                 ctx.drawImage(crackedEgg, 100, 75, 11 ,7);
-                setTimeout(function(){ctx.clearRect(100, 75, 11 ,7)}, 500);//clears cracked egg after 1 second
+                setTimeout(function(){ctx.clearRect(100, 75, 11 ,7)}, 200);//clears cracked egg after 1 second
             }
             if(eggToCheck.pos === 'bottomLeft'){
                 ctx.drawImage(crackedEgg, 100, 100, 11 ,7);
-                setTimeout(function(){ctx.clearRect(100, 100, 11 ,7)}, 500);//clears cracked egg after 1 second
+                setTimeout(function(){ctx.clearRect(100, 100, 11 ,7)}, 200);//clears cracked egg after 1 second
             }
             if (eggToCheck.pos === 'topRight'){
                 ctx.drawImage(crackedEgg, 190, 75, 11 ,7);
-                setTimeout(function(){ctx.clearRect(190, 75, 11 ,7)}, 500);//clears cracked egg after 1 second
+                setTimeout(function(){ctx.clearRect(190, 75, 11 ,7)}, 200);//clears cracked egg after 1 second
             }
             if (eggToCheck.pos === 'bottomRight'){
                 ctx.drawImage(crackedEgg, 190, 100, 11 ,7);
-                setTimeout(function(){ctx.clearRect(190, 100, 11 ,7)}, 500);//clears cracked egg after 1 second
+                setTimeout(function(){ctx.clearRect(190, 100, 11 ,7)}, 200);//clears cracked egg after 1 second
             }
         }
+    }
+
+    function gameOver(){
+        clearInterval(startEggs); //stops the game respectively the eggs generation
+        ctx.clearRect(gameOver.x, gameOver.y, gameOver.w, gameOver.h);
+        ctx.font = "17px Verdana";
+        var gradient = ctx.createLinearGradient(90, 60, 180, 0);
+        gradient.addColorStop("0.3", "red");
+        gradient.addColorStop("0.5", "orange");
+        gradient.addColorStop("0.75", "red");
+        ctx.fillStyle = gradient;
+        ctx.fillText("Game Over", 105, 30);
+        ctx.font = "10px Verdana"
+        ctx.fillStyle = gradient;
+        ctx.fillText("You need mooore practice!!!",85, 45);
+        ctx.fillStyle = gradient;
+        ctx.fillText("You need mooore practice!!!",85, 45);
+        ctx.fillText("Press F5 to re-start!!!", 98, 110);
     }
 }
 
