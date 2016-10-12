@@ -10,7 +10,6 @@ let eggTopLeft = {x: 73, y: 38, w: 5, h:7, pos: 'topLeft'};
 let eggTopRight = {x: 227, y: 36, w: 5, h:7, pos: 'topRight'};
 let eggBottomRight = {x: 227, y: 64, w: 5, h:7, pos: 'bottomRight'};
 let eggBottomLeft = {x: 73, y: 66, w: 5, h:7, pos: 'bottomLeft'};
-let gameOver = {x:59, y:2, w:183,  h:115};
 
 function init() {
     let ctx = document.getElementById("canvas").getContext("2d");
@@ -22,8 +21,7 @@ function init() {
     let egg = document.getElementById('theEgg');
     let crackedEgg = document.getElementById('crackedEgg');
 
-    let score = 0;
-    let lives = 3;
+    let score = 5;
     let wolfCurrentPos = '';
 
     // debugger;
@@ -95,11 +93,11 @@ function init() {
         wolfCurrentPos = wolfBottomLeft.pos;
     }
 
-    function fallingEggs(position) {
-        if(score < -100){
+    function fallingEggs() {
+        if(score < 0){
             gameOver();
         }
-        position = parseInt(Math.random() * (4)) + 1;
+        let position = parseInt(Math.random() * (4)) + 1;
         if (position === 1) {
             animate(eggTopLeft, 5, 3, wolfTopLeft, wolfCurrentPos);
         } else if (position === 2) {
@@ -136,14 +134,12 @@ function init() {
             }
             clear(eggToFall, -moveRateX, -moveRateY);
         } else if (eggToFall === eggTopRight || eggToFall === eggBottomRight) {
-            if(eggToFall.x === 202 && wolfToCheck.x + 50 === 200){
+            if(eggToFall.x === 202 && wolfToCheck.x  === 150){
                 if (!(isEggCaught(eggToFall, wolfPosition))) {
                     ctx.drawImage(egg, eggToFall.x, eggToFall.y, eggToFall.w, eggToFall.h);
                 }
             } else if(eggToFall.x < wolfToCheck.x + 50 ){
                 isEggCaught(eggToFall, wolfPosition);
-                console.log(lives + '-lives');
-                console.log(score  + '-score');
                 if (eggToFall === eggTopRight) {
                     clear(eggToFall, -moveRateX, -moveRateY);
                     eggToFall.x = 227;
@@ -159,47 +155,42 @@ function init() {
             }
             clear(eggToFall, -moveRateX, -moveRateY);
         }
-
     }
+
     function clear(eggToFall, offsetX, offsetY) {
         ctx.clearRect(eggToFall.x + offsetX, eggToFall.y + offsetY, eggToFall.w, eggToFall.h+1);
     }
 
     // The function isEggCaught checks only whether both the wolff and egg are together in top or bottom positions.
     function isEggCaught(eggToCheck, wolfCurrentPos) {
-        if(eggToCheck.x == 98){ //critical left side position values check
+        if(eggToCheck.x === 98 || eggToCheck.x === 103){ //critical left side position values check
             if(eggToCheck.pos === wolfCurrentPos){
                 score++;
+                eggToCheck.x = 73;
+                eggToCheck.y -= 15;
+                ctx.clearRect(93, 50, 5, 7);
+                ctx.clearRect(93, 78, 5, 7);
                 return true;
-            } else {
+            } else if (eggToCheck.x != 98) {
+                score --;
+                crackEgg(eggToCheck);
                 return false;
             }
-        } else if(eggToCheck.x == 202){ // critical right side position values check
+        } else if (eggToCheck.x === 202 || eggToCheck.x === 197){ //critical right side position values check
             if(eggToCheck.pos === wolfCurrentPos){
                 score++;
+                eggToCheck.x = 227;
+                eggToCheck.y -= 15;
+                ctx.clearRect(207, 48, 5, 7);
+                ctx.clearRect(207, 76, 5, 7);
+                ctx.clearRect(202, 51, 5, 7);
+                ctx.clearRect(202, 79, 5, 7);
                 return true;
-            } else {
+            }
+            else if (eggToCheck.x != 202) {
+                score --;
+                crackEgg(eggToCheck);
                 return false;
-            }
-        } else if (eggToCheck.pos === wolfCurrentPos) {
-            score ++
-        } else {
-            score --;
-            if(eggToCheck.pos === 'topLeft'){
-                ctx.drawImage(crackedEgg, 100, 75, 11 ,7);
-                setTimeout(function(){ctx.clearRect(100, 75, 11 ,7)}, 200);//clears cracked egg after 1 second
-            }
-            if(eggToCheck.pos === 'bottomLeft'){
-                ctx.drawImage(crackedEgg, 100, 100, 11 ,7);
-                setTimeout(function(){ctx.clearRect(100, 100, 11 ,7)}, 200);//clears cracked egg after 1 second
-            }
-            if (eggToCheck.pos === 'topRight'){
-                ctx.drawImage(crackedEgg, 190, 75, 11 ,7);
-                setTimeout(function(){ctx.clearRect(190, 75, 11 ,7)}, 200);//clears cracked egg after 1 second
-            }
-            if (eggToCheck.pos === 'bottomRight'){
-                ctx.drawImage(crackedEgg, 190, 100, 11 ,7);
-                setTimeout(function(){ctx.clearRect(190, 100, 11 ,7)}, 200);//clears cracked egg after 1 second
             }
         }
     }
@@ -213,13 +204,12 @@ function init() {
         gradient.addColorStop("0.5", "orange");
         gradient.addColorStop("0.75", "red");
         ctx.fillStyle = gradient;
-        ctx.fillText("Game Over", 105, 30);
+        ctx.fillText("Game Over", 105, 40);
         ctx.font = "10px Verdana";
         ctx.fillStyle = gradient;
-        ctx.fillText("You need mooore practice!!!",85, 45);
+        ctx.fillText("You need mooore practice!!!",85, 50);
         ctx.fillStyle = gradient;
-        ctx.fillText("You need mooore practice!!!",85, 45);
-        ctx.fillText("Press F5 to re-start!!!", 98, 110);
+        ctx.fillText("Press F5 to re-start!!!", 98, 115);
     }
 
     function drawScore() {
@@ -227,6 +217,27 @@ function init() {
         ctx.fillText(`Points: ${score}`, 120, 12);
         //ctx.fillText(`Lives: ${lives}`, 122, 22)
     }
+
+    function crackEgg(eggToCheck) {
+        if(eggToCheck.pos === 'topLeft'){
+            ctx.drawImage(crackedEgg, 100, 75, 11 ,7);
+            setTimeout(function(){ctx.clearRect(100, 75, 11 ,7)}, 200); //clears cracked egg after 0.2 second
+        }
+        if(eggToCheck.pos === 'bottomLeft'){
+            ctx.drawImage(crackedEgg, 100, 100, 11 ,7);
+            setTimeout(function(){ctx.clearRect(100, 100, 11 ,7)}, 200); //clears cracked egg after 0.2 second
+        }
+        if (eggToCheck.pos === 'topRight'){
+            ctx.drawImage(crackedEgg, 190, 75, 11 ,7);
+            setTimeout(function(){ctx.clearRect(190, 75, 11 ,7)}, 200); //clears cracked egg after 0.2 second
+        }
+        if (eggToCheck.pos === 'bottomRight'){
+            ctx.drawImage(crackedEgg, 190, 100, 11 ,7);
+            setTimeout(function(){ctx.clearRect(190, 100, 11 ,7)}, 200); //clears cracked egg after 0.2 second
+        }
+        return false;
+    }
+
 }
 
 init();
