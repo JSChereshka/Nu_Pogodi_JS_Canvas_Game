@@ -21,7 +21,6 @@ function init() {
     let wolfImgBottomLeft = document.getElementById('wolfBottomLeft');
     let egg = document.getElementById('theEgg');
     let crackedEgg = document.getElementById('crackedEgg');
-    let gameOverImg = document.getElementById('gameOver');
 
     let score = 0;
     let lives = 3;
@@ -33,6 +32,7 @@ function init() {
     window.addEventListener('keyup', kbuHandler);
 
     let startEggs = setInterval(fallingEggs, 400);
+    setInterval(drawScore, 100);
     function kbdHandler(event){
         //console.log(event.code);
         switch(event.code){
@@ -96,10 +96,10 @@ function init() {
     }
 
     function fallingEggs(position) {
-        if(score < -1){
+        if(score < -100){
             gameOver();
         }
-        position = parseInt(Math.random() * (4)) + 1;
+        position = generateFallingEggs();
         if (position === 1) {
             animate(eggTopLeft, 5, 3, wolfTopLeft, wolfCurrentPos);
         } else if (position === 2) {
@@ -121,8 +121,6 @@ function init() {
                 }
             } else if(eggToFall.x >= wolfToCheck.x ){
                 isEggCaught(eggToFall, wolfPosition);
-                console.log(lives + '-lives');
-                console.log(score  + '-score');
                 if (eggToFall === eggBottomLeft) {
                     clear(eggToFall, -moveRateX, -moveRateY);
                     eggToFall.x = 73;
@@ -216,13 +214,21 @@ function init() {
         gradient.addColorStop("0.75", "red");
         ctx.fillStyle = gradient;
         ctx.fillText("Game Over", 105, 30);
-        ctx.font = "10px Verdana"
+        ctx.font = "10px Verdana";
         ctx.fillStyle = gradient;
         ctx.fillText("You need mooore practice!!!",85, 45);
         ctx.fillStyle = gradient;
         ctx.fillText("You need mooore practice!!!",85, 45);
         ctx.fillText("Press F5 to re-start!!!", 98, 110);
     }
+
+    function drawScore() {
+        ctx.clearRect(0, 0, 200, 25);
+        ctx.fillText(`Points: ${score}`, 120, 12);
+        //ctx.fillText(`Lives: ${lives}`, 122, 22)
+    }
+
+
 }
 
 init();
