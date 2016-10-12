@@ -99,7 +99,7 @@ function init() {
         if(score < -100){
             gameOver();
         }
-        position = generateFallingEggs();
+        position = parseInt(Math.random() * (4)) + 1;
         if (position === 1) {
             animate(eggTopLeft, 5, 3, wolfTopLeft, wolfCurrentPos);
         } else if (position === 2) {
@@ -227,8 +227,6 @@ function init() {
         ctx.fillText(`Points: ${score}`, 120, 12);
         //ctx.fillText(`Lives: ${lives}`, 122, 22)
     }
-
-
 }
 
 init();
