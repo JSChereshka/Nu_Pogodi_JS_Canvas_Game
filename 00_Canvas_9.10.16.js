@@ -24,15 +24,12 @@ function init() {
     let score = 5;
     let wolfCurrentPos = '';
 
-    // debugger;
-
     window.addEventListener('keydown', kbdHandler);
     window.addEventListener('keyup', kbuHandler);
 
     let startEggs = setInterval(fallingEggs, 400);
     setInterval(drawScore, 100);
     function kbdHandler(event){
-        //console.log(event.code);
         switch(event.code){
             case 'Numpad7': drawTopLeft();
                 break;
@@ -117,9 +114,9 @@ function init() {
                 if (!(isEggCaught(eggToFall, wolfPosition))){
                     ctx.drawImage(egg, eggToFall.x, eggToFall.y, eggToFall.w, eggToFall.h);
                 }
-            } else if(eggToFall.x >= wolfToCheck.x ){
+            } else if(eggToFall.x >= wolfToCheck.x ){ // if the egg's X is more than the coordinate of the wolf image -> the function checks if the egg and the wolf are at the same position
                 isEggCaught(eggToFall, wolfPosition);
-                if (eggToFall === eggBottomLeft) {
+                if (eggToFall === eggBottomLeft) { // places the eggs at the starting point
                     clear(eggToFall, -moveRateX, -moveRateY);
                     eggToFall.x = 73;
                     eggToFall.y = 66;
@@ -215,7 +212,6 @@ function init() {
     function drawScore() {
         ctx.clearRect(0, 0, 200, 25);
         ctx.fillText(`Points: ${score}`, 120, 12);
-        //ctx.fillText(`Lives: ${lives}`, 122, 22)
     }
 
     function crackEgg(eggToCheck) {
