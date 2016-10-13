@@ -20,6 +20,8 @@ function init() {
     let wolfImgBottomLeft = document.getElementById('wolfBottomLeft');
     let egg = document.getElementById('theEgg');
     let crackedEgg = document.getElementById('crackedEgg');
+    let soundEfx = document.getElementById("soundEfx");
+    let soundLoad = "./src/game_over.mp3";
 
     let score = 5;
     let wolfCurrentPos = '';
@@ -91,8 +93,11 @@ function init() {
     }
 
     function fallingEggs() {
+        soundEfx.play();
         if(score < 0){
             gameOver();
+            soundEfx.src = soundLoad;
+            soundEfx.play();
         }
         let position = parseInt(Math.random() * (4)) + 1;
         if (position === 1) {
